@@ -225,7 +225,7 @@
     <div class="container">
         <div class="tv-frame">
             <div class="card">
-                <h1 class="header">ВНИМАНИЕ! nigger alarm!!</h1>
+                <h1 class="header">ВНИМАНИЕ! ДРУГУ ДР!</h1>
                 
                 <div class="emergency">
                     ⚠️ СИСТЕМНОЕ УВЕДОМЛЕНИЕ: Обнаружен именинник! ⚠️
@@ -244,7 +244,7 @@
                 
                 <div class="meme-text">
                     Твои планы: <span class="highlight">ВЗРОСЛЕТЬ</span><br>
-                    Реальность: <span class="highlight">ЕЩЁ ОДИН КУСОК ТОРТА...</span>
+                    Реальность: <span class="highlight">ЕЩЁ ОДИН КУСОК ТОРТА</span>
                 </div>
                 
                 <div class="buttons">
@@ -258,7 +258,7 @@
                 </div>
                 
                 <div class="meme-text">
-                    <span class="highlight">ПОЗДРАВЛЯЮ</span>, Фрозен!<br>
+                    <span class="highlight">ПОЗДРАВЛЯЮ</span>, бро!<br>
                     Желаю тебе столько же счастья,<br>
                     сколько ошибок в этом коде! 🚀
                 </div>
@@ -274,7 +274,7 @@
     <div class="fireworks" id="fireworks"></div>
 
     <script>
-        // База мемов с подписями
+
         const memes = [
             {
                 img: "https://i.imgflip.com/8k0sa0.jpg",
@@ -306,29 +306,29 @@
         let counter = 0;
         let partyActive = false;
 
-        // Смена мема
+
         function changeMeme() {
             currentMeme = (currentMeme + 1) % memes.length;
             document.getElementById('memeImage').src = memes[currentMeme].img;
             document.getElementById('memeCaption').textContent = memes[currentMeme].caption;
             
-            // Эффект
+       
             const img = document.getElementById('memeImage');
             img.style.transform = 'scale(0.8) rotate(10deg)';
             setTimeout(() => {
                 img.style.transform = 'scale(1) rotate(-0.5deg)';
             }, 200);
             
-            // Увеличиваем счетчик
+
             counter++;
             document.getElementById('counter').textContent = counter;
             
-            // Создаем летающие эмодзи
+
             createEmoji('🎂');
             createEmoji('🔥');
         }
 
-        // Добавление кринжа
+ 
         function addCringe() {
             const captions = [
                 "ВЖУХ И ТЫ ПОМОЛОДЕЛ НА ГОД!",
@@ -343,7 +343,7 @@
             emergency.textContent = "💀 " + captions[Math.floor(Math.random() * captions.length)] + " 💀";
             emergency.style.filter = 'hue-rotate(' + Math.random() * 360 + 'deg)';
             
-            // Мигающий эффект
+
             let flashes = 0;
             const flashInterval = setInterval(() => {
                 emergency.style.visibility = emergency.style.visibility === 'hidden' ? 'visible' : 'hidden';
@@ -357,13 +357,11 @@
                 }
             }, 100);
             
-            // Создаем кринжевые эмодзи
             createEmoji('💀');
             createEmoji('👁️');
             createEmoji('🫣');
         }
 
-        // Режим вечеринки
         function partyMode() {
             partyActive = !partyActive;
             
@@ -371,23 +369,19 @@
                 document.body.style.background = 'linear-gradient(45deg, #ff00ff, #00ffff, #ffff00)';
                 document.body.style.animation = 'tvGlitch 0.5s infinite';
                 
-                // Создаем много фейерверков
                 for (let i = 0; i < 50; i++) {
                     setTimeout(() => {
                         createFirework();
                     }, i * 100);
                 }
                 
-                // Меняем все цвета
                 document.querySelectorAll('.highlight').forEach(el => {
                     el.style.animation = 'colorShift 0.3s infinite';
                 });
                 
-                // Включаем "дыхание" карточки
                 const card = document.querySelector('.card');
                 card.style.animation = 'tvGlitch 0.2s infinite';
                 
-                // Звуковые эффекты (эмулируем через алерт)
                 if (counter % 5 === 0) {
                     try {
                         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -397,7 +391,7 @@
                         oscillator.start();
                         setTimeout(() => oscillator.stop(), 100);
                     } catch(e) {
-                        // Браузер не поддерживает Web Audio API
+      
                     }
                 }
             } else {
@@ -410,7 +404,6 @@
             }
         }
 
-        // Создание фейерверков
         function createFirework() {
             const firework = document.createElement('div');
             firework.className = 'firework';
@@ -426,7 +419,6 @@
             }, 2000);
         }
 
-        // Создание летающих эмодзи
         function createEmoji(emoji) {
             const emojiEl = document.createElement('div');
             emojiEl.textContent = emoji;
@@ -445,7 +437,6 @@
             }, 2000);
         }
 
-        // CSS для анимации эмодзи
         const style = document.createElement('style');
         style.textContent = `
             @keyframes flyUp {
@@ -461,24 +452,21 @@
             return colors[Math.floor(Math.random() * colors.length)];
         }
 
-        // Автопереключение мемов каждые 10 секунд
         setInterval(changeMeme, 10000);
 
-        // Случайные вспышки
         setInterval(() => {
             if (Math.random() > 0.7) {
                 createFirework();
             }
         }, 3000);
 
-        // Инициализация
         document.addEventListener('DOMContentLoaded', function() {
-            // Создаем начальные фейерверки
+ 
             for (let i = 0; i < 10; i++) {
                 setTimeout(createFirework, i * 300);
             }
             
-            // Анимация заголовка
+   
             const header = document.querySelector('.header');
             setInterval(() => {
                 header.style.textShadow = `
@@ -488,7 +476,6 @@
                 `;
             }, 1000);
             
-            // Случайное изменение кнопок
             setInterval(() => {
                 document.querySelectorAll('.meme-btn').forEach(btn => {
                     btn.style.filter = `hue-rotate(${Math.random() * 360}deg)`;
@@ -496,7 +483,6 @@
             }, 2000);
         });
 
-        // Секретная пасхалка по тройному клику
         let clickCount = 0;
         document.querySelector('.card').addEventListener('click', function() {
             clickCount++;
@@ -541,4 +527,3 @@
     </script>
 </body>
 </html>
-
