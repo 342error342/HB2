@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Днюха mode: ON</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #000;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><text y="24" font-size="24">🎂</text></svg>'), auto;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            position: relative;
+        }
+        
+        .tv-frame {
+            background: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00);
+            padding: 5px;
+            border-radius: 15px;
+            transform: rotate(1deg);
+            animation: tvGlitch 3s infinite;
+        }
+        
+        .card {
+            background: #000;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header {
+            color: #fff;
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            text-shadow: 
+                0 0 10px #ff00ff,
+                0 0 20px #00ffff,
+                0 0 30px #ffff00;
+            animation: textGlitch 2s infinite;
+            font-weight: 900;
+            transform: skew(-5deg);
+        }
+        
+        .meme-container {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 25px 0;
+            border: 3px dashed #ff00ff;
+            position: relative;
+        }
+        
+        .meme-img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 8px;
+            filter: saturate(2) contrast(1.2);
+            border: 4px solid #00ffff;
+            transform: rotate(-0.5deg);
+            transition: all 0.3s;
+        }
+        
+        .meme-text {
+            font-size: 2.2em;
+            color: #fff;
+            margin: 20px 0;
+            line-height: 1.3;
+            text-transform: uppercase;
+            font-weight: 900;
+        }
+        
+        .highlight {
+            color: #ff00ff;
+            background: #000;
+            padding: 5px 10px;
+            display: inline-block;
+            transform: skew(-10deg);
+            animation: colorShift 1s infinite;
+            text-shadow: 0 0 10px currentColor;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+        
+        .meme-btn {
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            border: none;
+            padding: 15px 25px;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #000;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .meme-btn:hover {
+            transform: scale(1.1) rotate(5deg);
+            filter: hue-rotate(90deg);
+        }
+        
+        .counter {
+            color: #fff;
+            font-size: 1.5em;
+            margin: 20px;
+            background: #333;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+        
+        .fireworks {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            animation: fireworkExplode 1.5s infinite;
+        }
+        
+        .emergency {
+            background: #ff0000;
+            color: #fff;
+            padding: 10px;
+            border: 3px solid #ffff00;
+            margin: 15px;
+            font-size: 1.8em;
+            animation: emergency 1s infinite;
+            transform: rotate(2deg);
+        }
+        
+        .meme-caption {
+            color: #00ffff;
+            font-size: 1.8em;
+            margin: 15px 0;
+            font-style: italic;
+            text-shadow: 0 0 10px #00ffff;
+        }
+        
+        .disclaimer {
+            color: #888;
+            font-size: 0.8em;
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        @keyframes tvGlitch {
+            0% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(180deg); transform: rotate(0deg); }
+            51% { transform: rotate(0.5deg); }
+            52% { transform: rotate(-0.5deg); }
+            53% { transform: rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+        
+        @keyframes textGlitch {
+            0%, 100% { transform: skew(-5deg) translateX(0); }
+            95% { transform: skew(-5deg) translateX(0); }
+            96% { transform: skew(-10deg) translateX(2px); color: #00ffff; }
+            97% { transform: skew(5deg) translateX(-2px); color: #ffff00; }
+            98% { transform: skew(-5deg) translateX(0); }
+        }
+        
+        @keyframes colorShift {
+            0% { color: #ff00ff; }
+            33% { color: #00ffff; }
+            66% { color: #ffff00; }
+            100% { color: #ff00ff; }
+        }
+        
+        @keyframes fireworkExplode {
+            0% { transform: translateY(100vh) scale(0); opacity: 1; }
+            50% { opacity: 1; }
+            100% { transform: translateY(0) scale(10); opacity: 0; }
+        }
+        
+        @keyframes emergency {
+            0%, 100% { background: #ff0000; }
+            50% { background: #ffff00; color: #000; }
+        }
+        
+        @media (max-width: 600px) {
+            .header { font-size: 2em; }
+            .meme-text { font-size: 1.5em; }
+            .meme-btn { padding: 10px 15px; font-size: 1em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="tv-frame">
+            <div class="card">
+                <h1 class="header">ВНИМАНИЕ! ДРУГУ ДР!</h1>
+                
+                <div class="emergency">
+                    ⚠️ СИСТЕМНОЕ УВЕДОМЛЕНИЕ: Обнаружен именинник! ⚠️
+                </div>
+                
+                <div class="meme-container">
+                    <img src="https://i.imgflip.com/8k0sa0.jpg" alt="Мем 'Distracted Boyfriend'" class="meme-img" id="memeImage">
+                    <div class="meme-caption" id="memeCaption">Когда видишь торт на днюхе друга:</div>
+                </div>
+                
+                <div class="meme-text">
+                    Ситуация:<br>
+                    <span class="highlight">ДРУГ</span> vs <span class="highlight">ВЗРОСЛАЯ ЖИЗНЬ</span><br>
+                    Победитель: <span class="highlight">ОЧЕВИДНО</span>
+                </div>
+                
+                <div class="meme-text">
+                    Твои планы: <span class="highlight">ВЗРОСЛЕТЬ</span><br>
+                    Реальность: <span class="highlight">ЕЩЁ ОДИН КУСОК ТОРТА</span>
+                </div>
+                
+                <div class="buttons">
+                    <button class="meme-btn" onclick="changeMeme()">🔥 СМЕНИТЬ МЕМ 🔥</button>
+                    <button class="meme-btn" onclick="addCringe()">💀 ДОБАВИТЬ КРИНЖА 💀</button>
+                    <button class="meme-btn" onclick="partyMode()">🎉 ВКЛЮЧИТЬ ХАЙП 🎉</button>
+                </div>
+                
+                <div class="counter">
+                    Поздравлений отправлено: <span id="counter">0</span>
+                </div>
+                
+                <div class="meme-text">
+                    <span class="highlight">ПОЗДРАВЛЯЮ</span>, бро!<br>
+                    Желаю тебе столько же счастья,<br>
+                    сколько ошибок в этом коде! 🚀
+                </div>
+                
+                <div class="disclaimer">
+                    *Эта открытка содержит 99% мема, 1% искренности<br>
+                    © Друг-разработчик, который умеет только в HTML
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="fireworks" id="fireworks"></div>
+
+    <script>
+        // База мемов с подписями
+        const memes = [
+            {
+                img: "https://i.imgflip.com/8k0sa0.jpg",
+                caption: "Когда видишь торт на днюхе друга:"
+            },
+            {
+                img: "https://i.imgflip.com/2/4t0m5.jpg",
+                caption: "Когда пытаешься сделать серьёзное поздравление:"
+            },
+            {
+                img: "https://i.imgflip.com/3vz8ls.jpg",
+                caption: "Именинник, получающий твои пожелания:"
+            },
+            {
+                img: "https://i.imgflip.com/1bij.jpg",
+                caption: "Твоё поздравление vs Ожидания друга:"
+            },
+            {
+                img: "https://i.imgflip.com/2hgfw.jpg",
+                caption: "Когда понимаешь, что не купил подарок:"
+            },
+            {
+                img: "https://i.imgflip.com/2odckz.jpg",
+                caption: "Настроение после торта:"
+            }
+        ];
+
+        let currentMeme = 0;
+        let counter = 0;
+        let partyActive = false;
+
+        // Смена мема
+        function changeMeme() {
+            currentMeme = (currentMeme + 1) % memes.length;
+            document.getElementById('memeImage').src = memes[currentMeme].img;
+            document.getElementById('memeCaption').textContent = memes[currentMeme].caption;
+            
+            // Эффект
+            const img = document.getElementById('memeImage');
+            img.style.transform = 'scale(0.8) rotate(10deg)';
+            setTimeout(() => {
+                img.style.transform = 'scale(1) rotate(-0.5deg)';
+            }, 200);
+            
+            // Увеличиваем счетчик
+            counter++;
+            document.getElementById('counter').textContent = counter;
+            
+            // Создаем летающие эмодзи
+            createEmoji('🎂');
+            createEmoji('🔥');
+        }
+
+        // Добавление кринжа
+        function addCringe() {
+            const captions = [
+                "ВЖУХ И ТЫ ПОМОЛОДЕЛ НА ГОД!",
+                "404: СЕРЬЁЗНОСТЬ НЕ НАЙДЕНА",
+                "ОШИБКА: ВЗРОСЛЕНИЕ НЕ УДАЛОСЬ",
+                "СИСТЕМА: ОБНАРУЖЕН ВЕЧНЫЙ СТУДЕНТ",
+                "ХАКЕРМАН: ВЗЛОМАЛ ВОЗРАСТ (ВЕРНУЛ -1)"
+            ];
+            
+            const emergency = document.querySelector('.emergency');
+            const original = emergency.textContent;
+            emergency.textContent = "💀 " + captions[Math.floor(Math.random() * captions.length)] + " 💀";
+            emergency.style.filter = 'hue-rotate(' + Math.random() * 360 + 'deg)';
+            
+            // Мигающий эффект
+            let flashes = 0;
+            const flashInterval = setInterval(() => {
+                emergency.style.visibility = emergency.style.visibility === 'hidden' ? 'visible' : 'hidden';
+                flashes++;
+                if (flashes > 10) {
+                    clearInterval(flashInterval);
+                    emergency.style.visibility = 'visible';
+                    setTimeout(() => {
+                        emergency.textContent = original;
+                    }, 1000);
+                }
+            }, 100);
+            
+            // Создаем кринжевые эмодзи
+            createEmoji('💀');
+            createEmoji('👁️');
+            createEmoji('🫣');
+        }
+
+        // Режим вечеринки
+        function partyMode() {
+            partyActive = !partyActive;
+            
+            if (partyActive) {
+                document.body.style.background = 'linear-gradient(45deg, #ff00ff, #00ffff, #ffff00)';
+                document.body.style.animation = 'tvGlitch 0.5s infinite';
+                
+                // Создаем много фейерверков
+                for (let i = 0; i < 50; i++) {
+                    setTimeout(() => {
+                        createFirework();
+                    }, i * 100);
+                }
+                
+                // Меняем все цвета
+                document.querySelectorAll('.highlight').forEach(el => {
+                    el.style.animation = 'colorShift 0.3s infinite';
+                });
+                
+                // Включаем "дыхание" карточки
+                const card = document.querySelector('.card');
+                card.style.animation = 'tvGlitch 0.2s infinite';
+                
+                // Звуковые эффекты (эмулируем через алерт)
+                if (counter % 5 === 0) {
+                    try {
+                        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                        const oscillator = audioContext.createOscillator();
+                        oscillator.frequency.value = 440;
+                        oscillator.connect(audioContext.destination);
+                        oscillator.start();
+                        setTimeout(() => oscillator.stop(), 100);
+                    } catch(e) {
+                        // Браузер не поддерживает Web Audio API
+                    }
+                }
+            } else {
+                document.body.style.background = '#000';
+                document.body.style.animation = '';
+                document.querySelector('.card').style.animation = '';
+                document.querySelectorAll('.highlight').forEach(el => {
+                    el.style.animation = 'colorShift 1s infinite';
+                });
+            }
+        }
+
+        // Создание фейерверков
+        function createFirework() {
+            const firework = document.createElement('div');
+            firework.className = 'firework';
+            firework.style.left = Math.random() * 100 + 'vw';
+            firework.style.background = getRandomColor();
+            firework.style.animationDuration = (Math.random() * 1 + 0.5) + 's';
+            firework.style.animationDelay = Math.random() * 0.5 + 's';
+            
+            document.getElementById('fireworks').appendChild(firework);
+            
+            setTimeout(() => {
+                firework.remove();
+            }, 2000);
+        }
+
+        // Создание летающих эмодзи
+        function createEmoji(emoji) {
+            const emojiEl = document.createElement('div');
+            emojiEl.textContent = emoji;
+            emojiEl.style.position = 'fixed';
+            emojiEl.style.fontSize = '2em';
+            emojiEl.style.left = Math.random() * 80 + 10 + 'vw';
+            emojiEl.style.top = '100vh';
+            emojiEl.style.zIndex = '1000';
+            emojiEl.style.pointerEvents = 'none';
+            emojiEl.style.animation = `flyUp ${Math.random() * 1 + 1}s forwards`;
+            
+            document.body.appendChild(emojiEl);
+            
+            setTimeout(() => {
+                emojiEl.remove();
+            }, 2000);
+        }
+
+        // CSS для анимации эмодзи
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes flyUp {
+                0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+                100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Случайный цвет
+        function getRandomColor() {
+            const colors = ['#ff00ff', '#00ffff', '#ffff00', '#ff0000', '#00ff00', '#0000ff'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        // Автопереключение мемов каждые 10 секунд
+        setInterval(changeMeme, 10000);
+
+        // Случайные вспышки
+        setInterval(() => {
+            if (Math.random() > 0.7) {
+                createFirework();
+            }
+        }, 3000);
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', function() {
+            // Создаем начальные фейерверки
+            for (let i = 0; i < 10; i++) {
+                setTimeout(createFirework, i * 300);
+            }
+            
+            // Анимация заголовка
+            const header = document.querySelector('.header');
+            setInterval(() => {
+                header.style.textShadow = `
+                    0 0 10px ${getRandomColor()},
+                    0 0 20px ${getRandomColor()},
+                    0 0 30px ${getRandomColor()}
+                `;
+            }, 1000);
+            
+            // Случайное изменение кнопок
+            setInterval(() => {
+                document.querySelectorAll('.meme-btn').forEach(btn => {
+                    btn.style.filter = `hue-rotate(${Math.random() * 360}deg)`;
+                });
+            }, 2000);
+        });
+
+        // Секретная пасхалка по тройному клику
+        let clickCount = 0;
+        document.querySelector('.card').addEventListener('click', function() {
+            clickCount++;
+            if (clickCount >= 3) {
+                clickCount = 0;
+                document.body.innerHTML = `
+                    <div style="
+                        position: fixed;
+                        top: 0; left: 0;
+                        width: 100vw; height: 100vh;
+                        background: #000;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        flex-direction: column;
+                        color: #0f0;
+                        font-family: monospace;
+                        font-size: 2em;
+                        text-align: center;
+                        z-index: 10000;
+                    ">
+                        <div style="animation: glitch 0.3s infinite;">ПОЗДРАВЛЕНИЕ ВЗЛОМАНО</div>
+                        <div style="font-size: 0.5em; margin-top: 20px;">
+                            СИСТЕМНОЕ СООБЩЕНИЕ: ДРУГ ЛУЧШИЙ<br>
+                            <span style="color: #f0f">НАЖМИ F5 ДЛЯ ВОЗВРАТА</span>
+                        </div>
+                        <style>
+                            @keyframes glitch {
+                                0% { transform: translate(0); }
+                                20% { transform: translate(-2px, 2px); }
+                                40% { transform: translate(-2px, -2px); }
+                                60% { transform: translate(2px, 2px); }
+                                80% { transform: translate(2px, -2px); }
+                                100% { transform: translate(0); }
+                            }
+                        </style>
+                    </div>
+                `;
+            }
+            setTimeout(() => clickCount = 0, 1000);
+        });
+    </script>
+</body>
+</html>
